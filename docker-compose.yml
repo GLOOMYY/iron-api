@@ -1,0 +1,38 @@
+services:
+  api_gateway:
+    build: ./api_gateway
+    container_name: api_gateway
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - auth_service
+      - armors_service
+      - events_service
+
+  auth_service:
+    build: ./services/auth_service
+    container_name: auth_service
+    restart: always
+    ports:
+      - "8001:8001"
+    environment:
+      MONGO_URI: "mongodb+srv://semesam:ufgb8HbLSBGTfjaU@ron-api.4bcsv.mongodb.net/auth_service"
+
+  armors_service:
+    build: ./services/armors_service
+    container_name: armors_service
+    restart: always
+    ports:
+      - "8002:8002"
+    environment:
+      MONGO_URI: "mongodb+srv://semesam:ufgb8HbLSBGTfjaU@ron-api.4bcsv.mongodb.net/armors_service"
+
+  events_service:
+    build: ./services/events_service
+    container_name: events_service
+    restart: always
+    ports:
+      - "8003:8003"
+    environment:
+      MONGO_URI: "mongodb+srv://semesam:ufgb8HbLSBGTfjaU@ron-api.4bcsv.mongodb.net/events_service"
