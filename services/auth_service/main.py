@@ -8,7 +8,7 @@ app = FastAPI()
 @app.get("/")
 def read_root():
     """Endpoint raíz: Verifica que el servicio está funcionando."""
-    return {"message": "El servicio está funcionando 🚀"}
+    return {"message": "El auth_service está funcionando 🚀"}
 
 @app.get("/health")
 def health_check():
