@@ -11,6 +11,7 @@ from fastapi import HTTPException, Depends, Request
 from fastapi.security import OAuth2PasswordBearer
 from typing import Dict, Optional
 from pydantic import ValidationError
+from jwt import ExpiredSignatureError, InvalidTokenError
 
 async def create_user(user: UserCreate):
     """Registra un usuario en la base de datos."""
@@ -114,5 +115,8 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         if email is None:
             raise HTTPException(status_code=401, detail="Token inválido")
         return TokenData(email=email)
-    except jwt.PyJWTError:
+    except ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="Token expirado")
+    except InvalidTokenError:
         raise HTTPException(status_code=401, detail="Token inválido")
+
