@@ -27,7 +27,8 @@ async def create_user(user: UserCreate):
     hashed_password = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
     # Crear usuario con contraseña encriptada
-    new_user = UserDB(email=user.email, hashed_password=hashed_password)
+    new_user = UserDB(email=user.email, hashed_password=hashed_password, created_at=datetime.utcnow())
+
     
     # Insertar en la base de datos
     await db.users.insert_one(new_user.dict())
