@@ -20,6 +20,7 @@ services:
       - "8001:8001"
     environment:
       - MONGO_URI=${MONGO_URI_AUTH}
+      - SECRET_KEY=${SECRET_KEY}
 
   armors_service:
     build: ./services/armors_service
