@@ -90,11 +90,11 @@ async def authenticate_user(user: UserLogin):
     # Buscar usuario en la base de datos
     user_data = await db.users.find_one({"email": user.email})
     if not user_data:
-        raise ValueError("Usuario o contraseña incorrectos.")
+        raise HTTPException(status_code=401, detail="Credenciales incorrectas.")
 
     # Verificar la contraseña
     if not bcrypt.checkpw(user.password.encode('utf-8'), user_data["hashed_password"].encode('utf-8')):
-        raise ValueError("Usuario o contraseña incorrectos.")
+        raise HTTPException(status_code=401, detail="Credenciales incorrectas.")
 
     # Generar token JWT
     token = create_access_token({"sub": user.email})
