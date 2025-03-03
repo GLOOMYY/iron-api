@@ -36,19 +36,9 @@ async def create_user(user: UserCreate):
     return {"message": "Usuario registrado exitosamente"}
 
 def validate_password(password: str) -> bool:
-    """Valida que la contraseña cumpla con los requisitos de seguridad."""
-    # Mínimo 8 caracteres, al menos una letra mayúscula, una minúscula, un número y un carácter especial
-    if len(password) < 8:
-        return False
-    if not re.search(r'[A-Z]', password):
-        return False
-    if not re.search(r'[a-z]', password):
-        return False
-    if not re.search(r'[0-9]', password):
-        return False
-    if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
-        return False
-    return True
+    """Valida si la contraseña cumple con los requisitos de seguridad."""
+    pattern = r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$'
+    return bool(re.match(pattern, password))
 
 
 """Lógica para autenticación de usuarios con JWT."""
